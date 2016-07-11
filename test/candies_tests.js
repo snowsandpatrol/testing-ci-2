@@ -2,6 +2,7 @@
 const expect = require('chai').expect
 const supertest = require('supertest')
 const api = supertest('https://node-flight846.c9users.io')
+const app = require('../app')
 
 describe('GET /candies', () => {
     it('should return a 200 response', (done) => {
@@ -9,7 +10,7 @@ describe('GET /candies', () => {
         .set('Accept', 'application/json')
         .expect(200, done)
     })
-    
+
     it('should return an array', (done) => {
         api.get('/candies')
         .set('Accept', 'application/json')
@@ -19,7 +20,7 @@ describe('GET /candies', () => {
             done()
         })
     })
-    
+
     it('should return an object that has a field called "name', (done) => {
         api.get('/candies')
         .set('Accept', 'application/json')
@@ -37,7 +38,7 @@ describe('POST /candies', () => {
         .set('Accept', 'application/json')
         .expect(200, done)
     })
-    
+
     before((done) => {
         api.post('/candies')
         .set('Accept', 'application/json')
@@ -47,10 +48,10 @@ describe('POST /candies', () => {
             "color": "red"
         }).end(done)
     })
-    
+
     // it('should return a 422 response if the field color is wrong')
-    
-   
+
+
     it('should add a new candy to the database', (done) => {
         api.get('/candies')
         .set('Accept', 'application/json')
@@ -60,7 +61,7 @@ describe('POST /candies', () => {
             expect(response.body[response.body.length-1].name).to.equal('lollipop')
             done()
         })
-    }) 
+    })
 })
 
 describe('PUT /candies', () => {
@@ -69,7 +70,7 @@ describe('PUT /candies', () => {
         .set('Accept', 'application/json')
         .expect(200, done)
     })
-    
+
     it('should update a candy document', (done) => {
         api.put('/candies/5')
         .set('Accept', 'application/json')
@@ -79,7 +80,7 @@ describe('PUT /candies', () => {
             expect(response.body.message).to.equal('candies5 updated')
             done()
         })
-    }) 
+    })
 })
 
 describe('Delete /candies/:id', () => {
